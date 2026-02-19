@@ -1,0 +1,163 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 42,
+  "spacing": 0,
+  "margin-top": 6,
+  "margin-left": 10,
+  "margin-right": 10,
+
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
+
+  "modules-center": [
+    "clock"
+  ],
+
+  "modules-right": [
+    "custom/weather",
+    "custom/sysmon",
+    "backlight",
+    "pulseaudio",
+    "network",
+    "battery",
+    "custom/notification"
+  ],
+
+  // Workspaces
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "on-click": "activate",
+    "all-outputs": true,
+    "show-special": true
+  },
+
+  // Clock with Calendar popup
+  "clock": {
+    "format": "{:%I:%M %p}",
+    "format-alt": "{:%a, %b %d  %I:%M %p}",
+    "tooltip-format": "<big>{:%B %Y}</big>\n<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#cdd6f4'><b>{}</b></span>",
+        "days": "<span color='#bac2de'>{}</span>",
+        "weeks": "<span color='#89b4fa'>W{}</span>",
+        "weekdays": "<span color='#f9e2af'>{}</span>",
+        "today": "<span color='#a6e3a1'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    },
+    "on-click": "~/.config/waybar/scripts/calendar.sh"
+  },
+
+  // Weather module - refreshes every hour
+  "custom/weather": {
+    "exec": "~/.config/waybar/scripts/weather.sh",
+    "return-type": "json",
+    "interval": 3600,
+    "on-click": "~/.config/waybar/scripts/weather.sh forecast",
+    "on-click-right": "~/.config/waybar/scripts/weather.sh refresh",
+    "tooltip": true
+  },
+
+  // System monitor
+  "custom/sysmon": {
+    "exec": "~/.config/waybar/scripts/sysmon.sh",
+    "return-type": "json",
+    "interval": 5,
+    "on-click": "~/.config/waybar/scripts/sysmon.sh popup",
+    "on-click-right": "~/.config/waybar/scripts/sysmon.sh live",
+    "tooltip": true
+  },
+
+  // Backlight
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "󰃟  {percent}%",
+    "tooltip": false,
+    "on-scroll-up": "brightnessctl set +5%",
+    "on-scroll-down": "brightnessctl set 5%-"
+  },
+
+  // Volume with interactive controls
+  "pulseaudio": {
+    "format": "{icon}  {volume}%",
+    "format-muted": "󰝟  muted",
+    "format-icons": {
+      "headphone": "󰋋",
+      "hands-free": "󰋋",
+      "headset": "󰋎",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["󰕿", "󰖀", "󰕾"]
+    },
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
+    "tooltip": true,
+    "tooltip-format": "{desc}\nVolume: {volume}%"
+  },
+
+  // Network with WiFi menu
+  "network": {
+    "format-wifi": "󰤨  {signalStrength}%",
+    "format-ethernet": "󰈀  {ipaddr}",
+    "format-disconnected": "󰤭  offline",
+    "format-linked": "󰤩  {ifname}",
+    "tooltip-format-wifi": "  {essid}\n󰩟  {ipaddr}\n󱎔  {signalStrength}%\n󰕒  {bandwidthUpBytes}\n󰇚  {bandwidthDownBytes}",
+    "tooltip-format-ethernet": "󰈀  {ifname}\n󰩟  {ipaddr}\n󰕒  {bandwidthUpBytes}\n󰇚  {bandwidthDownBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "on-click": "~/.config/waybar/scripts/wifi-menu.sh",
+    "on-click-right": "nm-connection-editor",
+    "interval": 5
+  },
+
+  // Battery with detailed tooltip
+  "battery": {
+    "states": {
+      "full": 100,
+      "good": 80,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon}  {capacity}%",
+    "format-charging": "󰂄  {capacity}%",
+    "format-plugged": "󰂄  {capacity}%",
+    "format-full": "󰁹  Full",
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "tooltip-format": "Battery: {capacity}%\nTime: {time}\nPower: {power:.1f}W\nCycles: {health}%"
+  },
+
+  // Notification Center toggle
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "󰂚<span foreground='#f38ba8'><sup></sup></span>",
+      "none": "󰂜",
+      "dnd-notification": "󰂛<span foreground='#f38ba8'><sup></sup></span>",
+      "dnd-none": "󰂛",
+      "inhibited-notification": "󰂚<span foreground='#f38ba8'><sup></sup></span>",
+      "inhibited-none": "󰂜",
+      "dnd-inhibited-notification": "󰂛<span foreground='#f38ba8'><sup></sup></span>",
+      "dnd-inhibited-none": "󰂛"
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  }
+}

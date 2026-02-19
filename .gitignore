@@ -1,0 +1,20 @@
+# Cache files
+*.cache
+*~
+.*.swp
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Generated color files (will be regenerated)
+# hypr/colors-dynamic.conf
+# waybar/colors.css
+# swaync/colors.css
+
+# Local overrides (create these for machine-specific settings)
+hypr/local.conf
+waybar/local.css
