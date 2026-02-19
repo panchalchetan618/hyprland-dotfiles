@@ -398,6 +398,7 @@ EOF
     fi
 
     success "Initial color files created"
+}
 
 # Setup GTK theme
 setup_gtk() {
