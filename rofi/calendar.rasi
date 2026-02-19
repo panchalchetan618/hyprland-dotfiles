@@ -1,0 +1,53 @@
+/* Calendar Popup Theme */
+/* Centered below clock in waybar */
+
+* {
+    bg:             #1e1e2eE6;
+    bg-alt:         #313244CC;
+    fg:             #cdd6f4;
+    fg-alt:         #a6adc8;
+    accent:         #89b4fa;
+    today:          #a6e3a1;
+    transparent:    #00000000;
+    border-color:   #45475a80;
+
+    background-color: @transparent;
+    text-color: @fg;
+    margin: 0;
+    padding: 0;
+}
+
+window {
+    location: north;
+    anchor: north;
+    y-offset: 54px;
+    width: 320px;
+    background-color: @bg;
+    border: 1px solid;
+    border-color: @border-color;
+    border-radius: 14px;
+}
+
+mainbox {
+    spacing: 0;
+    background-color: @transparent;
+}
+
+inputbar {
+    enabled: false;
+}
+
+message {
+    padding: 20px;
+    background-color: @transparent;
+}
+
+textbox {
+    font: "JetBrainsMono Nerd Font 11";
+    text-color: @fg;
+    background-color: @transparent;
+}
+
+listview {
+    enabled: false;
+}

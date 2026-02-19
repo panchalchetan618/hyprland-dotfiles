@@ -39,6 +39,16 @@ chmod +x install.sh
 ./install.sh --no-backup      # Skip config backup
 ```
 
+### First Run
+
+After installation and logging into Hyprland:
+
+1. Add wallpapers to `~/Pictures/Wallpapers/`
+2. Press `Super + W` to open the wallpaper picker
+3. Select a wallpaper - colors will automatically be applied everywhere
+
+The theme system will remember your last wallpaper for future sessions.
+
 ## Manual Installation
 
 1. Install required packages (Arch Linux):
@@ -151,7 +161,9 @@ dotfiles/
 │   ├── design.conf         # Visual settings
 │   ├── monitors.conf       # Display configuration
 │   └── scripts/
-│       ├── wallpaper-theme.sh
+│       ├── wallpaper-theme.sh   # Main theming script
+│       ├── wallpaper-init.sh    # First-run wallpaper setup
+│       ├── wallpaper-picker.sh  # Rofi wallpaper selector
 │       ├── screenshot.sh
 │       ├── screenrecord.sh
 │       ├── clipboard.sh
@@ -159,11 +171,16 @@ dotfiles/
 ├── waybar/
 │   ├── config.jsonc
 │   ├── style.css
-│   └── colors.css          # Dynamic colors
+│   └── colors.css          # Dynamic colors (auto-generated)
 ├── swaync/
 │   ├── config.json
 │   ├── style.css
-│   └── colors.css          # Dynamic colors
+│   └── colors.css          # Dynamic colors (auto-generated)
+├── rofi/
+│   ├── config.rasi
+│   ├── theme.rasi
+│   ├── popup.rasi
+│   └── colors.rasi         # Dynamic colors (auto-generated)
 ├── gtk-3.0/
 │   └── settings.ini
 ├── gtk-4.0/

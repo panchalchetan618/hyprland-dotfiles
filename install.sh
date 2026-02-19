@@ -254,6 +254,7 @@ backup_configs() {
         "$HOME/.config/hypr"
         "$HOME/.config/waybar"
         "$HOME/.config/swaync"
+        "$HOME/.config/rofi"
         "$HOME/.config/gtk-3.0"
         "$HOME/.config/gtk-4.0"
         "$HOME/.config/xdg-desktop-portal"
@@ -287,6 +288,7 @@ install_dotfiles() {
         "hypr:$HOME/.config/hypr"
         "waybar:$HOME/.config/waybar"
         "swaync:$HOME/.config/swaync"
+        "rofi:$HOME/.config/rofi"
         "gtk-3.0:$HOME/.config/gtk-3.0"
         "gtk-4.0:$HOME/.config/gtk-4.0"
         "xdg-desktop-portal:$HOME/.config/xdg-desktop-portal"
@@ -315,7 +317,87 @@ install_dotfiles() {
     if [ -d "$HOME/.config/waybar/scripts" ]; then
         chmod +x "$HOME/.config/waybar/scripts/"*.sh 2>/dev/null || true
     fi
+
+    # Create initial color files if they don't exist
+    create_initial_colors
 }
+
+# Create default color files for first run
+create_initial_colors() {
+    info "Creating initial color files..."
+
+    # Default colors (dark theme)
+    local BG="#1e1e2e"
+    local BG_LIGHT="#313244"
+    local FG="#cdd6f4"
+    local FG_DIM="#6c7086"
+    local ACCENT="#89b4fa"
+    local ACCENT2="#a6e3a1"
+
+    # Hyprland colors
+    if [ ! -f "$HOME/.config/hypr/colors-dynamic.conf" ]; then
+        cat > "$HOME/.config/hypr/colors-dynamic.conf" << EOF
+# Default colors - will be updated by wallpaper-theme.sh
+\$accent1 = ${ACCENT}
+\$accent2 = ${ACCENT2}
+
+general {
+    col.active_border = rgba(${ACCENT:1}ff) rgba(${ACCENT2:1}ff) 45deg
+    col.inactive_border = rgba(${FG_DIM:1}40)
+}
+EOF
+    fi
+
+    # Waybar colors
+    if [ ! -f "$HOME/.config/waybar/colors.css" ]; then
+        cat > "$HOME/.config/waybar/colors.css" << EOF
+/* Default colors - will be updated by wallpaper-theme.sh */
+@define-color bg-base rgba(30, 30, 46, 0.75);
+@define-color bg-surface rgba(49, 50, 68, 0.9);
+@define-color bg-hover rgba(255, 255, 255, 0.1);
+@define-color bg-active rgba(137, 180, 250, 0.2);
+
+@define-color text-primary ${FG};
+@define-color text-secondary ${FG_DIM};
+
+@define-color accent-primary ${ACCENT};
+@define-color accent-secondary ${ACCENT2};
+@define-color accent-tertiary #f9e2af;
+
+@define-color warning #f9e2af;
+@define-color critical #f38ba8;
+@define-color success #a6e3a1;
+EOF
+    fi
+
+    # SwayNC colors
+    if [ ! -f "$HOME/.config/swaync/colors.css" ]; then
+        cat > "$HOME/.config/swaync/colors.css" << EOF
+/* Default colors - will be updated by wallpaper-theme.sh */
+@define-color bg rgba(30, 30, 46, 0.95);
+@define-color bg-solid ${BG};
+@define-color bg-hover rgba(49, 50, 68, 0.95);
+@define-color bg-focus rgba(69, 71, 90, 0.95);
+@define-color bg-widget rgba(49, 50, 68, 0.9);
+
+@define-color text ${FG};
+@define-color text-secondary ${FG_DIM};
+@define-color text-dim #585b70;
+
+@define-color accent ${ACCENT};
+@define-color accent-light rgba(137, 180, 250, 0.2);
+@define-color accent2 ${ACCENT2};
+
+@define-color border rgba(255, 255, 255, 0.08);
+@define-color border-light rgba(255, 255, 255, 0.12);
+
+@define-color green #4ade80;
+@define-color yellow #facc15;
+@define-color red #ef4444;
+EOF
+    fi
+
+    success "Initial color files created"
 
 # Setup GTK theme
 setup_gtk() {

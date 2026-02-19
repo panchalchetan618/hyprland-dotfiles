@@ -1,0 +1,78 @@
+/* System Monitor Popup Theme */
+/* Positioned below sysmon module */
+
+* {
+    bg:             #1e1e2eE6;
+    bg-alt:         #313244CC;
+    fg:             #cdd6f4;
+    fg-alt:         #a6adc8;
+    accent:         #89b4fa;
+    green:          #a6e3a1;
+    yellow:         #f9e2af;
+    red:            #f38ba8;
+    transparent:    #00000000;
+    border-color:   #45475a80;
+
+    background-color: @transparent;
+    text-color: @fg;
+    margin: 0;
+    padding: 0;
+}
+
+window {
+    location: north;
+    anchor: north;
+    x-offset: 280px;
+    y-offset: 54px;
+    width: 360px;
+    background-color: @bg;
+    border: 1px solid;
+    border-color: @border-color;
+    border-radius: 14px;
+}
+
+mainbox {
+    spacing: 0;
+    background-color: @transparent;
+}
+
+inputbar {
+    enabled: false;
+}
+
+message {
+    padding: 18px;
+    background-color: @transparent;
+}
+
+textbox {
+    font: "JetBrainsMono Nerd Font 10";
+    text-color: @fg;
+    background-color: @transparent;
+}
+
+listview {
+    lines: 3;
+    padding: 8px;
+    spacing: 4px;
+    background-color: @transparent;
+}
+
+element {
+    padding: 10px 14px;
+    border-radius: 10px;
+    background-color: @transparent;
+    cursor: pointer;
+}
+
+element selected.normal {
+    background-color: @bg-alt;
+}
+
+element-text {
+    background-color: @transparent;
+}
+
+element-text selected {
+    text-color: @accent;
+}

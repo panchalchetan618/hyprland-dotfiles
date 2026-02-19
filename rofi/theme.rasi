@@ -1,0 +1,99 @@
+/* macOS-style Rofi Theme - App Launcher */
+
+* {
+    bg:             #1e1e2eB3;
+    bg-alt:         #313244CC;
+    bg-hover:       #45475aE6;
+    fg:             #cdd6f4;
+    fg-alt:         #a6adc8;
+    accent:         #89b4fa;
+    urgent:         #f38ba8;
+    transparent:    #00000000;
+    border-color:   #ffffff18;
+
+    background-color: @transparent;
+    text-color: @fg;
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+
+window {
+    location: center;
+    width: 420px;
+    background-color: @bg;
+    border: 1px solid;
+    border-color: @border-color;
+    border-radius: 14px;
+}
+
+mainbox {
+    padding: 14px;
+    spacing: 14px;
+    background-color: @transparent;
+}
+
+inputbar {
+    padding: 10px 14px;
+    spacing: 10px;
+    background-color: @bg-alt;
+    border-radius: 10px;
+    children: [ icon-search, entry ];
+}
+
+icon-search {
+    expand: false;
+    filename: "search-symbolic";
+    size: 16px;
+    vertical-align: 0.5;
+    background-color: @transparent;
+}
+
+entry {
+    placeholder: "Search...";
+    placeholder-color: @fg-alt;
+    background-color: @transparent;
+}
+
+message {
+    border-radius: 10px;
+    background-color: @bg-alt;
+}
+
+textbox {
+    padding: 10px;
+    background-color: @transparent;
+}
+
+listview {
+    lines: 8;
+    fixed-height: true;
+    spacing: 4px;
+    background-color: @transparent;
+}
+
+element {
+    padding: 8px 12px;
+    spacing: 10px;
+    border-radius: 8px;
+    background-color: @transparent;
+}
+
+element selected.normal {
+    background-color: @bg-hover;
+}
+
+element-icon {
+    size: 22px;
+    vertical-align: 0.5;
+    background-color: @transparent;
+}
+
+element-text {
+    vertical-align: 0.5;
+    background-color: @transparent;
+}
+
+element-text selected {
+    text-color: @accent;
+}

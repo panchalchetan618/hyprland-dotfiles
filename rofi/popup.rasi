@@ -1,0 +1,103 @@
+/* Popup Menu Theme - WiFi, System, etc */
+/* macOS-style dropdown from waybar */
+
+* {
+    bg:             #1e1e2eE6;
+    bg-alt:         #313244CC;
+    bg-hover:       #45475aE6;
+    fg:             #cdd6f4;
+    fg-alt:         #a6adc8;
+    fg-dim:         #6c7086;
+    accent:         #89b4fa;
+    green:          #a6e3a1;
+    yellow:         #f9e2af;
+    red:            #f38ba8;
+    transparent:    #00000000;
+    border-color:   #45475a80;
+
+    background-color: @transparent;
+    text-color: @fg;
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+
+window {
+    location: north east;
+    anchor: north east;
+    x-offset: -8px;
+    y-offset: 54px;
+    width: 300px;
+    background-color: @bg;
+    border: 1px solid;
+    border-color: @border-color;
+    border-radius: 14px;
+}
+
+mainbox {
+    spacing: 0;
+    background-color: @transparent;
+}
+
+inputbar {
+    enabled: false;
+}
+
+message {
+    padding: 14px 18px;
+    background-color: @transparent;
+    border: 0 0 1px 0;
+    border-color: #ffffff0d;
+}
+
+textbox {
+    text-color: @fg-alt;
+    vertical-align: 0.5;
+    background-color: @transparent;
+}
+
+listview {
+    padding: 8px;
+    lines: 10;
+    fixed-height: false;
+    dynamic: true;
+    spacing: 4px;
+    background-color: @transparent;
+}
+
+element {
+    padding: 10px 14px;
+    spacing: 12px;
+    border-radius: 10px;
+    background-color: @transparent;
+    cursor: pointer;
+}
+
+element selected.normal {
+    background-color: @bg-hover;
+}
+
+element normal.active,
+element alternate.active {
+    text-color: @green;
+}
+
+element selected.active {
+    background-color: @bg-hover;
+    text-color: @green;
+}
+
+element-icon {
+    size: 20px;
+    vertical-align: 0.5;
+    background-color: @transparent;
+}
+
+element-text {
+    vertical-align: 0.5;
+    background-color: @transparent;
+}
+
+element-text selected {
+    text-color: @accent;
+}
