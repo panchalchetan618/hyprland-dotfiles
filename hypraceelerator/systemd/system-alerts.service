@@ -1,0 +1,6 @@
+[Unit]
+Description=Hypraceelerator System Alerts
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/hypraceelerator/scripts/system-alerts.sh

@@ -177,10 +177,12 @@ install_packages() {
 
     # Theming
     local theme_packages=(
-        python-pywal
+        matugen
         imagemagick
         jq
         bc
+        inotify-tools
+        rsync
     )
 
     # Audio
@@ -196,6 +198,7 @@ install_packages() {
     local font_packages=(
         ttf-jetbrains-mono-nerd
         ttf-font-awesome
+        ttf-opensans
         noto-fonts
         noto-fonts-emoji
     )
@@ -230,6 +233,7 @@ install_packages() {
         swappy
         avizo
         wlogout
+        ttf-google-sans
     )
 
     if [ -n "$AUR_HELPER" ]; then
@@ -255,8 +259,11 @@ backup_configs() {
         "$HOME/.config/waybar"
         "$HOME/.config/swaync"
         "$HOME/.config/rofi"
+        "$HOME/.config/kitty"
         "$HOME/.config/gtk-3.0"
         "$HOME/.config/gtk-4.0"
+        "$HOME/.config/fontconfig"
+        "$HOME/.config/hypraceelerator"
         "$HOME/.config/xdg-desktop-portal"
     )
 
@@ -289,8 +296,11 @@ install_dotfiles() {
         "waybar:$HOME/.config/waybar"
         "swaync:$HOME/.config/swaync"
         "rofi:$HOME/.config/rofi"
+        "kitty:$HOME/.config/kitty"
         "gtk-3.0:$HOME/.config/gtk-3.0"
         "gtk-4.0:$HOME/.config/gtk-4.0"
+        "fontconfig:$HOME/.config/fontconfig"
+        "hypraceelerator:$HOME/.config/hypraceelerator"
         "xdg-desktop-portal:$HOME/.config/xdg-desktop-portal"
     )
 
@@ -318,6 +328,10 @@ install_dotfiles() {
         chmod +x "$HOME/.config/waybar/scripts/"*.sh 2>/dev/null || true
     fi
 
+    if [ -d "$HOME/.config/hypraceelerator/scripts" ]; then
+        chmod +x "$HOME/.config/hypraceelerator/scripts/"*.sh 2>/dev/null || true
+    fi
+
     # Create initial color files if they don't exist
     create_initial_colors
 }
@@ -337,7 +351,7 @@ create_initial_colors() {
     # Hyprland colors
     if [ ! -f "$HOME/.config/hypr/colors-dynamic.conf" ]; then
         cat > "$HOME/.config/hypr/colors-dynamic.conf" << EOF
-# Default colors - will be updated by wallpaper-theme.sh
+# Default colors - will be updated by theme-apply.sh
 \$accent1 = ${ACCENT}
 \$accent2 = ${ACCENT2}
 
@@ -351,7 +365,7 @@ EOF
     # Waybar colors
     if [ ! -f "$HOME/.config/waybar/colors.css" ]; then
         cat > "$HOME/.config/waybar/colors.css" << EOF
-/* Default colors - will be updated by wallpaper-theme.sh */
+/* Default colors - will be updated by theme-apply.sh */
 @define-color bg-base rgba(30, 30, 46, 0.75);
 @define-color bg-surface rgba(49, 50, 68, 0.9);
 @define-color bg-hover rgba(255, 255, 255, 0.1);
@@ -373,7 +387,7 @@ EOF
     # SwayNC colors
     if [ ! -f "$HOME/.config/swaync/colors.css" ]; then
         cat > "$HOME/.config/swaync/colors.css" << EOF
-/* Default colors - will be updated by wallpaper-theme.sh */
+/* Default colors - will be updated by theme-apply.sh */
 @define-color bg rgba(30, 30, 46, 0.95);
 @define-color bg-solid ${BG};
 @define-color bg-hover rgba(49, 50, 68, 0.95);
@@ -408,6 +422,10 @@ setup_gtk() {
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' 2>/dev/null || true
     gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' 2>/dev/null || true
     gsettings set org.gnome.desktop.interface icon-theme 'Adwaita' 2>/dev/null || true
+    gsettings set org.gnome.desktop.interface font-name 'Google Sans 11' 2>/dev/null || true
+    gsettings set org.gnome.desktop.interface document-font-name 'Google Sans 11' 2>/dev/null || true
+    gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrains Mono Nerd Font 11' 2>/dev/null || true
+    fc-cache -f 2>/dev/null || true
 
     # Link GTK4 theme if WhiteSur is available
     if [ -d "/usr/share/themes/WhiteSur-Dark/gtk-4.0" ]; then
@@ -459,24 +477,24 @@ setup_wallpaper() {
     fi
 }
 
-# Generate initial pywal colors
+# Generate initial theme colors
 setup_colors() {
     header "Setting Up Colors"
 
-    if command -v wal &>/dev/null; then
+    if command -v matugen &>/dev/null; then
         # Find a wallpaper to use
         local wallpaper=$(find "$HOME/Pictures/Wallpapers" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" \) | head -1)
 
         if [ -n "$wallpaper" ]; then
             info "Generating colors from $wallpaper..."
-            wal -i "$wallpaper" -n -q -e 2>/dev/null || true
+            "$HOME/.config/hypr/scripts/theme-apply.sh" "$wallpaper" 2>/dev/null || true
             success "Colors generated"
         else
             warn "No wallpapers found. Add images to ~/Pictures/Wallpapers/ and run:"
-            info "  ~/.config/hypr/scripts/wallpaper-theme.sh <wallpaper-path>"
+            info "  ~/.config/hypr/scripts/theme-apply.sh <wallpaper-path>"
         fi
     else
-        warn "pywal not installed, skipping color generation"
+        warn "matugen not installed, skipping color generation"
     fi
 }
 
@@ -495,7 +513,7 @@ print_completion() {
     echo "  1. Log out and select Hyprland from your display manager"
     echo "  2. Add wallpapers to ~/Pictures/Wallpapers/"
     echo "  3. Apply a wallpaper theme:"
-    echo "     ${YELLOW}~/.config/hypr/scripts/wallpaper-theme.sh ~/Pictures/Wallpapers/your-wallpaper.jpg${NC}"
+    echo "     ${YELLOW}~/.config/hypr/scripts/theme-apply.sh ~/Pictures/Wallpapers/your-wallpaper.jpg${NC}"
     echo ""
     echo -e "${CYAN}Key bindings:${NC}"
     echo "  Super + T        Terminal (kitty)"

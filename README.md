@@ -7,7 +7,7 @@ A modern, feature-rich Hyprland desktop configuration with dynamic theming based
 
 ## Features
 
-- **Dynamic Theming** - Colors automatically generated from wallpaper using pywal
+- **Dynamic Theming** - Colors automatically generated from wallpaper using matugen
 - **Modern UI** - Clean waybar with rounded corners and blur effects
 - **Notification Center** - Feature-rich swaync with power menu and quick toggles
 - **Screenshot Tools** - Region, window, and fullscreen capture with clipboard support
@@ -57,9 +57,9 @@ The theme system will remember your last wallpaper for future sessions.
 sudo pacman -S hyprland hyprlock hypridle xdg-desktop-portal-hyprland \
     waybar swaync rofi-wayland swww kitty nautilus \
     grim slurp swappy wf-recorder cliphist wl-clipboard \
-    python-pywal brightnessctl playerctl pavucontrol \
+    matugen brightnessctl playerctl pavucontrol \
     pipewire pipewire-pulse wireplumber \
-    ttf-jetbrains-mono-nerd ttf-font-awesome
+    ttf-jetbrains-mono-nerd ttf-font-awesome ttf-opensans
 ```
 
 2. Copy configurations:
@@ -68,8 +68,12 @@ sudo pacman -S hyprland hyprlock hypridle xdg-desktop-portal-hyprland \
 cp -r hypr ~/.config/
 cp -r waybar ~/.config/
 cp -r swaync ~/.config/
+cp -r rofi ~/.config/
+cp -r kitty ~/.config/
 cp -r gtk-3.0 ~/.config/
 cp -r gtk-4.0 ~/.config/
+cp -r fontconfig ~/.config/
+cp -r hypraceelerator ~/.config/
 cp -r xdg-desktop-portal ~/.config/
 ```
 
@@ -140,14 +144,14 @@ The theme system extracts colors from your wallpaper and applies them across:
 - SwayNC notification panel
 
 ```bash
-~/.config/hypr/scripts/wallpaper-theme.sh ~/Pictures/Wallpapers/your-wallpaper.jpg
+~/.config/hypr/scripts/theme-apply.sh ~/Pictures/Wallpapers/your-wallpaper.jpg
 ```
 
 ### Supported Transition Effects
 
 ```bash
-# Available transitions: grow, wave, wipe, center, random
-~/.config/hypr/scripts/wallpaper-theme.sh ~/Pictures/wallpaper.jpg wave
+# Optional mode: dark or light
+~/.config/hypr/scripts/theme-apply.sh ~/Pictures/wallpaper.jpg dark
 ```
 
 ## Directory Structure
@@ -161,7 +165,7 @@ dotfiles/
 │   ├── design.conf         # Visual settings
 │   ├── monitors.conf       # Display configuration
 │   └── scripts/
-│       ├── wallpaper-theme.sh   # Main theming script
+│       ├── theme-apply.sh       # Main theming script
 │       ├── wallpaper-init.sh    # First-run wallpaper setup
 │       ├── wallpaper-picker.sh  # Rofi wallpaper selector
 │       ├── screenshot.sh
@@ -181,6 +185,14 @@ dotfiles/
 │   ├── theme.rasi
 │   ├── popup.rasi
 │   └── colors.rasi         # Dynamic colors (auto-generated)
+├── kitty/
+│   └── kitty.conf
+├── fontconfig/
+│   └── conf.d/
+├── hypraceelerator/
+│   ├── Makefile
+│   ├── scripts/
+│   └── systemd/
 ├── gtk-3.0/
 │   └── settings.ini
 ├── gtk-4.0/
@@ -238,7 +250,7 @@ Check for CSS errors: `waybar` in terminal to see error output.
 - pipewire, wireplumber
 
 ### Optional
-- python-pywal (dynamic theming)
+- matugen (dynamic theming)
 - grim, slurp, swappy (screenshots)
 - wf-recorder (screen recording)
 - cliphist (clipboard history)
@@ -248,7 +260,7 @@ Check for CSS errors: `waybar` in terminal to see error output.
 - [Hyprland](https://hyprland.org/)
 - [Waybar](https://github.com/Alexays/Waybar)
 - [SwayNC](https://github.com/ErikReider/SwayNotificationCenter)
-- [pywal](https://github.com/dylanaraps/pywal)
+- [matugen](https://github.com/InioX/matugen)
 
 ## License
 

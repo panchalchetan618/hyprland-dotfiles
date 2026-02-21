@@ -1,0 +1,6 @@
+[Unit]
+Description=Hypraceelerator Dotfiles Backup
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/hypraceelerator/scripts/dotfiles-backup.sh

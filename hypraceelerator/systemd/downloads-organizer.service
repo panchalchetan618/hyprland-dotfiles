@@ -1,0 +1,11 @@
+[Unit]
+Description=Hypraceelerator Downloads Organizer
+
+[Service]
+Type=simple
+ExecStart=%h/.config/hypraceelerator/scripts/downloads-organizer.sh
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target

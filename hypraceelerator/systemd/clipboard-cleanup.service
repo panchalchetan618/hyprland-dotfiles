@@ -1,0 +1,6 @@
+[Unit]
+Description=Hypraceelerator Clipboard Cleanup
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/hypraceelerator/scripts/clipboard-cleanup.sh

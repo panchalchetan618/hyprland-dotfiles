@@ -48,7 +48,6 @@
 
   "widgets": [
     "title",
-    "menubar#power",
     "volume",
     "backlight",
     "buttons-grid",
@@ -62,60 +61,6 @@
       "text": "Control Center",
       "clear-all-button": true,
       "button-text": "󰎟"
-    },
-    "menubar#power": {
-      "menu#power": {
-        "label": "󰐥   Power",
-        "position": "left",
-        "actions": [
-          {
-            "label": "󰌾   Lock Screen",
-            "command": "~/.config/hypr/scripts/powermenu.sh lock"
-          },
-          {
-            "label": "󰤄   Suspend",
-            "command": "~/.config/hypr/scripts/powermenu.sh suspend"
-          },
-          {
-            "label": "󰍃   Log Out",
-            "command": "~/.config/hypr/scripts/powermenu.sh logout"
-          },
-          {
-            "label": "󰜉   Reboot",
-            "command": "~/.config/hypr/scripts/powermenu.sh reboot"
-          },
-          {
-            "label": "󰐥   Shut Down",
-            "command": "~/.config/hypr/scripts/powermenu.sh shutdown"
-          }
-        ]
-      },
-      "menu#settings": {
-        "label": "󰒓   Settings",
-        "position": "left",
-        "actions": [
-          {
-            "label": "󰕾   Sound",
-            "command": "pavucontrol"
-          },
-          {
-            "label": "󰀂   Display",
-            "command": "wdisplays"
-          },
-          {
-            "label": "󰂯   Bluetooth",
-            "command": "blueman-manager"
-          },
-          {
-            "label": "󰖩   Network",
-            "command": "nm-connection-editor"
-          },
-          {
-            "label": "󰒓   All Settings",
-            "command": "XDG_CURRENT_DESKTOP=GNOME gnome-control-center"
-          }
-        ]
-      }
     },
     "volume": {
       "label": "󰕾",
@@ -145,6 +90,18 @@
           "update-command": "sh -c 'nmcli radio wifi | grep -q enabled && echo true || echo false'"
         },
         {
+          "label": "Theme",
+          "type": "toggle",
+          "active": false,
+          "command": "~/.config/hypr/scripts/theme-toggle.sh",
+          "update-command": "~/.config/hypr/scripts/theme-status.sh"
+        },
+        {
+          "label": "󰐥",
+          "type": "normal",
+          "command": "~/.config/hypr/scripts/powermenu.sh menu"
+        },
+        {
           "label": "󰍹",
           "type": "toggle",
           "active": false,
@@ -156,13 +113,6 @@
           "active": false,
           "command": "sh -c 'pgrep hypridle > /dev/null && (pkill hypridle && notify-send \"Idle Inhibitor\" \"Screen will not auto-lock\") || (hypridle & notify-send \"Idle Inhibitor\" \"Auto-lock enabled\")'",
           "update-command": "sh -c 'pgrep hypridle > /dev/null && echo false || echo true'"
-        },
-        {
-          "label": "󰖨",
-          "type": "toggle",
-          "active": false,
-          "command": "sh -c 'pgrep gammastep > /dev/null && pkill gammastep || gammastep -O 4500'",
-          "update-command": "sh -c 'pgrep gammastep > /dev/null && echo true || echo false'"
         },
         {
           "label": "󱄄",

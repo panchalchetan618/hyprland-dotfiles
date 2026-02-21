@@ -1,16 +1,7 @@
-/* macOS-style Rofi Theme - App Launcher */
+/* Hypraceelerator Rofi Theme - App Launcher */
+@import "colors.rasi"
 
 * {
-    bg:             #1e1e2eB3;
-    bg-alt:         #313244CC;
-    bg-hover:       #45475aE6;
-    fg:             #cdd6f4;
-    fg-alt:         #a6adc8;
-    accent:         #89b4fa;
-    urgent:         #f38ba8;
-    transparent:    #00000000;
-    border-color:   #ffffff18;
-
     background-color: @transparent;
     text-color: @fg;
     margin: 0;

@@ -1,13 +1,14 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 42,
-  "spacing": 0,
-  "margin-top": 6,
-  "margin-left": 10,
-  "margin-right": 10,
+  "height": 32,
+  "spacing": 12,
+  "margin": 6,
+  "exclusive": true,
+  "gtk-layer-shell": true,
 
   "modules-left": [
+    "custom/apple",
     "hyprland/workspaces"
   ],
 
@@ -21,55 +22,33 @@
     "backlight",
     "pulseaudio",
     "network",
-    "battery",
-    "custom/notification"
+    "bluetooth",
+    "custom/battery",
+    "custom/notification",
+    "tray"
   ],
+
+  // Apple logo
+  "custom/apple": {
+    "format": " ",
+    "tooltip": false,
+    "on-click": "rofi -show drun"
+  },
 
   // Workspaces
   "hyprland/workspaces": {
     "format": "{icon}",
+    "format-icons": {
+      "active": "●",
+      "default": "○",
+      "empty": "○"
+    },
     "on-click": "activate",
     "all-outputs": true,
     "show-special": true
   },
 
-  // Clock with Calendar popup
-  "clock": {
-    "format": "{:%I:%M %p}",
-    "format-alt": "{:%a, %b %d  %I:%M %p}",
-    "tooltip-format": "<big>{:%B %Y}</big>\n<tt>{calendar}</tt>",
-    "calendar": {
-      "mode": "month",
-      "mode-mon-col": 3,
-      "weeks-pos": "right",
-      "on-scroll": 1,
-      "format": {
-        "months": "<span color='#cdd6f4'><b>{}</b></span>",
-        "days": "<span color='#bac2de'>{}</span>",
-        "weeks": "<span color='#89b4fa'>W{}</span>",
-        "weekdays": "<span color='#f9e2af'>{}</span>",
-        "today": "<span color='#a6e3a1'><b><u>{}</u></b></span>"
-      }
-    },
-    "actions": {
-      "on-click-right": "mode",
-      "on-scroll-up": "shift_up",
-      "on-scroll-down": "shift_down"
-    },
-    "on-click": "~/.config/waybar/scripts/calendar.sh"
-  },
-
-  // Weather module - refreshes every hour
-  "custom/weather": {
-    "exec": "~/.config/waybar/scripts/weather.sh",
-    "return-type": "json",
-    "interval": 3600,
-    "on-click": "~/.config/waybar/scripts/weather.sh forecast",
-    "on-click-right": "~/.config/waybar/scripts/weather.sh refresh",
-    "tooltip": true
-  },
-
-  // System monitor
+  // System Monitor
   "custom/sysmon": {
     "exec": "~/.config/waybar/scripts/sysmon.sh",
     "return-type": "json",
@@ -79,80 +58,83 @@
     "tooltip": true
   },
 
+  // Weather
+  "custom/weather": {
+    "exec": "~/.config/waybar/scripts/weather.sh",
+    "return-type": "json",
+    "interval": 900,
+    "on-click": "~/.config/waybar/scripts/weather.sh forecast",
+    "on-click-right": "~/.config/waybar/scripts/weather.sh refresh",
+    "tooltip": true
+  },
+
   // Backlight
   "backlight": {
     "device": "intel_backlight",
-    "format": "󰃟  {percent}%",
+    "format": "{percent}%",
     "tooltip": false,
     "on-scroll-up": "brightnessctl set +5%",
     "on-scroll-down": "brightnessctl set 5%-"
   },
 
-  // Volume with interactive controls
+  // Volume
   "pulseaudio": {
-    "format": "{icon}  {volume}%",
-    "format-muted": "󰝟  muted",
-    "format-icons": {
-      "headphone": "󰋋",
-      "hands-free": "󰋋",
-      "headset": "󰋎",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["󰕿", "󰖀", "󰕾"]
-    },
+    "format": "{volume}%",
+    "format-muted": "Muted",
+    "tooltip-format": "{desc}",
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "on-click-right": "pavucontrol",
     "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
-    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
-    "tooltip": true,
-    "tooltip-format": "{desc}\nVolume: {volume}%"
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
   },
 
-  // Network with WiFi menu
+  // Network
   "network": {
-    "format-wifi": "󰤨  {signalStrength}%",
-    "format-ethernet": "󰈀  {ipaddr}",
-    "format-disconnected": "󰤭  offline",
-    "format-linked": "󰤩  {ifname}",
-    "tooltip-format-wifi": "  {essid}\n󰩟  {ipaddr}\n󱎔  {signalStrength}%\n󰕒  {bandwidthUpBytes}\n󰇚  {bandwidthDownBytes}",
-    "tooltip-format-ethernet": "󰈀  {ifname}\n󰩟  {ipaddr}\n󰕒  {bandwidthUpBytes}\n󰇚  {bandwidthDownBytes}",
-    "tooltip-format-disconnected": "Disconnected",
+    "format-wifi": "{signalStrength}%",
+    "format-ethernet": "LAN",
+    "format-disconnected": "Off",
+    "tooltip-format-wifi": "{essid}\n{ipaddr}",
+    "tooltip-format-ethernet": "{ifname}\n{ipaddr}",
     "on-click": "~/.config/waybar/scripts/wifi-menu.sh",
     "on-click-right": "nm-connection-editor",
     "interval": 5
   },
 
-  // Battery with detailed tooltip
-  "battery": {
-    "states": {
-      "full": 100,
-      "good": 80,
-      "warning": 30,
-      "critical": 15
-    },
-    "format": "{icon}  {capacity}%",
-    "format-charging": "󰂄  {capacity}%",
-    "format-plugged": "󰂄  {capacity}%",
-    "format-full": "󰁹  Full",
-    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-    "tooltip-format": "Battery: {capacity}%\nTime: {time}\nPower: {power:.1f}W\nCycles: {health}%"
+  // Bluetooth
+  "bluetooth": {
+    "format": "",
+    "format-disabled": " Off",
+    "format-connected": " {num_connections}",
+    "tooltip": true,
+    "on-click": "blueman-manager"
   },
 
-  // Notification Center toggle
+  // Battery (custom for dynamic SVG levels)
+  "custom/battery": {
+    "exec": "~/.config/waybar/scripts/battery.sh",
+    "return-type": "json",
+    "interval": 30,
+    "tooltip": false
+  },
+
+  // Idle Inhibitor
+  // Clock - macOS style: Day Mon Date  Time
+  "clock": {
+    "format": "{:%a %d %b  %I:%M %p}",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "format": {
+        "today": "<b><u>{}</u></b>"
+      }
+    },
+    "on-click": "~/.config/waybar/scripts/calendar.sh"
+  },
+
+  // Notification Center (Control Center style)
   "custom/notification": {
     "tooltip": false,
-    "format": "{icon}",
-    "format-icons": {
-      "notification": "󰂚<span foreground='#f38ba8'><sup></sup></span>",
-      "none": "󰂜",
-      "dnd-notification": "󰂛<span foreground='#f38ba8'><sup></sup></span>",
-      "dnd-none": "󰂛",
-      "inhibited-notification": "󰂚<span foreground='#f38ba8'><sup></sup></span>",
-      "inhibited-none": "󰂜",
-      "dnd-inhibited-notification": "󰂛<span foreground='#f38ba8'><sup></sup></span>",
-      "dnd-inhibited-none": "󰂛"
-    },
+    "format": " ",
     "return-type": "json",
     "exec-if": "which swaync-client",
     "exec": "swaync-client -swb",

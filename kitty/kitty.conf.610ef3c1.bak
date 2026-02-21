@@ -1,0 +1,8 @@
+# ~/.config/kitty/kitty.conf
+
+include themes/catppuccin-mocha.conf
+
+font_family JetBrains Mono
+font_size 12.5
+window_padding_width 10
+background_opacity 0.92

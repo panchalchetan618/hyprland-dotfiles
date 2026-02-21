@@ -1,0 +1,6 @@
+[Unit]
+Description=Hypraceelerator Screenshot Organizer
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/hypraceelerator/scripts/screenshots-organizer.sh

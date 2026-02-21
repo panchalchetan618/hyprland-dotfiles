@@ -1,0 +1,6 @@
+[Unit]
+Description=Hypraceelerator Downloads Archive
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/hypraceelerator/scripts/downloads-archive.sh
